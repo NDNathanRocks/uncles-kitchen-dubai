@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { MobileActionBar } from "@/components/mobile-action-bar";
 import { RestaurantJsonLd } from "@/components/json-ld";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 const anton = Anton({ variable: "--font-anton", weight: "400", subsets: ["latin"], display: "swap" });
 const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"], display: "swap" });
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <RestaurantJsonLd />
+        <SmoothScroll />
         <Header />
         <main id="main">{children}</main>
         <Footer />

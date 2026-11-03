@@ -22,24 +22,19 @@ npm run build    # production build
 
 ## Images
 
-- `public/images/raw/` — original downloads (interior photo + 12 printed menu pages).
-- `public/images/dishes/` — dish cut-outs taken from the menu pages.
-- `scripts/process-images.py` regenerates the WebP assets and the menu PDF;
-  `scripts/make-icons.py` regenerates the favicon / app icons from the stamp.
-  Both need Python 3 with Pillow: `python scripts/process-images.py .`
+- `public/images/raw/`: original downloads (interior photo + 12 printed menu pages).
+- `public/images/menu/` and `public/uncles-kitchen-menu.pdf`: made by `python scripts/process-images.py .`
+- `public/images/hero/plate-full.webp`: the hero plate. It is AI-generated (Stability AI on Bedrock,
+  via `scripts/gen-image.py`) and is a stand-in until real food photography arrives.
+- `scripts/make-icons.py` regenerates the favicon / app icons from the stamp.
 
-The dish photos come from small images on the printed menu, so they are low resolution.
-New close-up food photography (especially the chicken lollipop) would lift the site a lot.
+To add real dish photos: put full-frame photos in `public/images/`, import them in
+`data/signature.ts` and set `image` (and `alt`) on a dish. The card shows the photo automatically.
 
-### Hero "drop" scene (AI-generated)
+## Motion
 
-The homepage hero plate (`public/images/hero/`) was generated with Stability AI on
-Amazon Bedrock and is an illustration, not a photo of the restaurant's own plating.
-Pipeline (needs boto3 + Bedrock access in us-west-2):
-
-1. `scripts/gen-image.py generate` → full plate (Stable Image Ultra).
-2. Colour-mask the chicken, then `scripts/gen-image.py inpaint` → the same plate without chicken.
-3. `scripts/extract-pieces.py` → one transparent WebP per chicken piece + `pieces.json`
-   (positions), copied into `data/hero.ts`.
-
-`gen-image.py` logs every call with an estimated cost to `scripts/.gen-ledger.csv` and stops at a budget cap.
+- Smooth scrolling: Lenis (`components/smooth-scroll.tsx`).
+- 3D hero with ember glow, steam and heat shimmer: `components/hero-plate.tsx`.
+- Pointer-tilt 3D cards: `components/tilt.tsx`.
+- Drawn Mumbai-to-Dubai journey: `components/journey.tsx`.
+- Everything respects `prefers-reduced-motion`.

@@ -135,7 +135,7 @@ export function MenuBrowser({ categories }: { categories: MenuCategory[] }) {
           </div>
         ) : null}
         {visible.map((c) => (
-          <section key={c.id} id={`cat-${c.id}`} aria-labelledby={`h-${c.id}`} className="scroll-mt-48 pt-12 md:scroll-mt-44">
+          <section key={c.id} id={`cat-${c.id}`} aria-labelledby={`h-${c.id}`} className="scroll-mt-28 pt-12 md:scroll-mt-24">
             <h2 id={`h-${c.id}`} className="display border-b-2 border-chili pb-3 text-4xl sm:text-5xl">
               {c.title}
             </h2>

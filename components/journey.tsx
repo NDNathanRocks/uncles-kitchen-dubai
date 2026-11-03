@@ -25,6 +25,7 @@ export function Journey({ chapters }: { chapters: Chapter[] }) {
   const track = useRef<SVGSVGElement>(null);
   const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const planeRef = useRef<SVGGElement>(null);
+  const backRef = useRef<SVGSVGElement>(null);
 
   const onFrame = useCallback(
     (p: number) => {
@@ -42,6 +43,7 @@ export function Journey({ chapters }: { chapters: Chapter[] }) {
       const visible = vp.clientWidth / scale;
       const pan = clamp(head - visible * 0.62, 0, Math.max(0, VB_W - visible));
       svg.style.transform = `translate3d(${-pan * scale}px,0,0)`;
+      if (backRef.current) backRef.current.style.transform = `translate3d(${-pan * scale * 0.45}px,0,0)`;
 
       svg.querySelectorAll<SVGGraphicsElement>("[data-draw]").forEach((el) => {
         let r = extents.get(el);
@@ -130,7 +132,27 @@ export function Journey({ chapters }: { chapters: Chapter[] }) {
           </div>
         </div>
 
-        <div ref={viewport} className="relative mt-auto mb-[calc(4.25rem+env(safe-area-inset-bottom))] h-[40svh] overflow-hidden md:mb-0 md:h-[54svh]" aria-hidden>
+        <div ref={viewport} className="relative mt-auto mb-[calc(4.25rem+env(safe-area-inset-bottom))] h-[40svh] origin-bottom overflow-hidden [transform:perspective(1400px)_rotateX(12deg)] md:mb-0 md:h-[54svh]" aria-hidden>
+          {/* far layer: sun and clouds drift slower than the skyline (parallax depth) */}
+          <svg
+            ref={backRef}
+            viewBox={`0 0 ${VB_W} ${VB_H}`}
+            preserveAspectRatio="xMinYMax meet"
+            className="absolute bottom-0 left-0 h-full w-auto max-w-none text-[#b88600] will-change-transform"
+            style={{ aspectRatio: `${VB_W} / ${VB_H}` }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+          >
+            <circle cx="760" cy="150" r="58" />
+            <path d="M700 230 h120 M680 250 h160" />
+            <path d="M240 140 q20 -36 60 -20 q16 -30 52 -10 q34 -6 34 30 h-150 z" />
+            <path d="M1260 110 q18 -30 52 -16 q16 -26 46 -8 q30 -4 30 24 h-128 z" />
+            <path d="M2080 90 q20 -34 58 -18 q16 -28 50 -8 q32 -4 32 26 h-140 z" />
+            <circle cx="2560" cy="120" r="48" />
+            <path d="M2860 150 q18 -30 50 -14 q16 -26 44 -6 q28 -4 28 22 h-122 z" />
+          </svg>
           <svg
             ref={track}
             viewBox={`0 0 ${VB_W} ${VB_H}`}

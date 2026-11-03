@@ -21,7 +21,7 @@ export function Stamp({ size = "md", className = "" }: { size?: "sm" | "md" | "l
 
 export function LogoLink({ size = "md" }: { size?: "sm" | "md" }) {
   return (
-    <Link href="/" aria-label="Uncle's Kitchen, home" className="inline-block rounded-sm transition-transform hover:-rotate-1">
+    <Link href="/" aria-label="Uncle's Kitchen, home" className="stamp-3d inline-block rounded-sm">
       <Stamp size={size} />
     </Link>
   );
