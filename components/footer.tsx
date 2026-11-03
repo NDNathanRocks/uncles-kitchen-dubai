@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { links, site } from "@/config/site";
 import { formatTime, groupedHours } from "@/lib/hours";
-import { Stamp, Steam } from "./brand";
+import { Stamp } from "./brand";
 import { InstagramIcon } from "./icons";
 
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-cream/10 bg-char-2">
-      <Steam className="pointer-events-none absolute -right-6 bottom-0 h-56 text-cream/5" />
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
           <Stamp size="md" />

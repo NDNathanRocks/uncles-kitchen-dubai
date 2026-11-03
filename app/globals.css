@@ -62,17 +62,6 @@
     }
   }
 
-  .steam path {
-    stroke-dasharray: 6 14;
-    animation: steam 5s linear infinite;
-  }
-  .steam path:nth-child(2) {
-    animation-duration: 6.5s;
-  }
-  .steam path:nth-child(3) {
-    animation-duration: 4.2s;
-  }
-
   .rise-in {
     animation: reveal 0.9s var(--ease-out-soft) both;
   }
@@ -89,12 +78,6 @@
   to {
     opacity: 1;
     transform: perspective(900px) translateY(0) rotateX(0);
-  }
-}
-
-@keyframes steam {
-  to {
-    stroke-dashoffset: -80;
   }
 }
 
@@ -237,4 +220,21 @@
 /* Map stays usable with smooth scroll on */
 .lenis.lenis-smooth iframe.map-embed {
   pointer-events: auto;
+}
+
+/* Menu panel: each category swaps in with a small 3D lift */
+@media (prefers-reduced-motion: no-preference) {
+  .panel-in {
+    animation: panel-in 0.45s var(--ease-out-soft) both;
+  }
+}
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(14px) rotateX(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

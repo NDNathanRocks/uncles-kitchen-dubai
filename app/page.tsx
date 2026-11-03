@@ -1,10 +1,12 @@
 import { links, site } from "@/config/site";
 import { signatureDishes } from "@/data/signature";
+import { menu } from "@/data/menu";
+import { MenuPanel } from "@/components/menu-panel";
 import heroPlate from "@/public/images/hero/plate-full.webp";
 import { HeroPlate } from "@/components/hero-plate";
 import { Journey } from "@/components/journey";
 import { Tilt } from "@/components/tilt";
-import { Eyebrow, Steam } from "@/components/brand";
+import { Eyebrow } from "@/components/brand";
 import { ButtonLink, btn } from "@/components/buttons";
 import { DishCards } from "@/components/dish-cards";
 import { HoursTable, OpenBadge } from "@/components/live-hours";
@@ -17,6 +19,7 @@ export default function Home() {
       <SignatureBand />
       <Journey chapters={timeline} />
       <Signature />
+      <MenuSection />
       <Rating />
       <Instagram />
       <Visit />
@@ -120,10 +123,26 @@ function Signature() {
       <div className="mt-12">
         <DishCards dishes={signatureDishes} />
       </div>
-      <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6">
-        <ButtonLink href="/menu" variant="outline">
-          Full menu &amp; prices <ArrowIcon width={18} height={18} />
-        </ButtonLink>
+    </section>
+  );
+}
+
+function MenuSection() {
+  return (
+    <section id="menu" aria-labelledby="menu-title" className="pb-20 md:pb-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Eyebrow className="text-chili">The full menu</Eyebrow>
+            <h2 id="menu-title" className="display reveal text-[clamp(2.6rem,7vw,4.8rem)]">
+              Pick a <span className="text-turmeric">craving.</span>
+            </h2>
+          </div>
+          <ButtonLink href="/menu" variant="outline">
+            Menu page &amp; PDF <ArrowIcon width={18} height={18} />
+          </ButtonLink>
+        </div>
+        <MenuPanel categories={menu} idPrefix="home-menu" />
       </div>
     </section>
   );
@@ -150,7 +169,6 @@ const timeline = [
 function Rating() {
   return (
     <section aria-labelledby="rating-title" className="relative overflow-hidden bg-chili py-16 text-char md:py-20">
-      <Steam className="pointer-events-none absolute -bottom-6 left-4 h-52 text-char/15" />
       <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 id="rating-title" className="flex flex-wrap items-end gap-x-5 gap-y-2">
@@ -185,15 +203,24 @@ function Instagram() {
             href={links.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-col gap-8 rounded-3xl bg-char-2 p-8 ring-1 ring-cream/10 transition hover:ring-turmeric/60 sm:p-12 md:flex-row md:items-end md:justify-between"
+            className="group relative flex flex-col gap-8 rounded-3xl bg-char-2 p-6 ring-1 ring-cream/10 transition hover:ring-turmeric/60 sm:p-12 md:flex-row md:items-end md:justify-between"
           >
-            <Steam className="pointer-events-none absolute top-6 right-8 h-40 text-turmeric/15" />
             <div className="[transform:translateZ(40px)]">
               <p className="flex items-center gap-3 text-xs font-bold tracking-[0.3em] text-chili uppercase">
                 <span className="h-0.5 w-8 bg-current" aria-hidden /> On Instagram
               </p>
-              <h2 id="ig-title" className="display mt-4 text-[clamp(2rem,6vw,4.5rem)] break-all sm:break-normal">
-                @{site.instagram.handle}
+              <h2 id="ig-title" className="display mt-4 text-[clamp(1.9rem,8.5vw,4.5rem)] leading-[1.05]">
+                @
+                {site.instagram.handle.split("_").map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 ? (
+                      <>
+                        _<wbr />
+                      </>
+                    ) : null}
+                  </span>
+                ))}
               </h2>
               <p className="mt-3 max-w-md text-muted">New dishes, the wok in action and what&rsquo;s cooking in Karama.</p>
             </div>

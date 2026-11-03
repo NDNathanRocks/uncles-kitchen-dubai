@@ -27,25 +27,6 @@ export function LogoLink({ size = "md" }: { size?: "sm" | "md" }) {
   );
 }
 
-/** Rising-steam line motif. Decorative only. */
-export function Steam({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 120 160"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      className={`steam ${className}`}
-      aria-hidden
-    >
-      <path d="M30 155c-14-20 14-32 0-52s14-32 0-52 14-30 0-48" />
-      <path d="M60 155c-14-20 14-32 0-52s14-32 0-52 14-30 0-48" opacity=".75" />
-      <path d="M90 155c-14-20 14-32 0-52s14-32 0-52 14-30 0-48" opacity=".5" />
-    </svg>
-  );
-}
-
 export function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <p className={`mb-4 flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase ${className}`}>

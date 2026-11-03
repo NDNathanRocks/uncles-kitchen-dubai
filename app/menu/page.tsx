@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { links, site } from "@/config/site";
 import { menu, menuNotes, menuPages } from "@/data/menu";
-import { Eyebrow, Steam } from "@/components/brand";
+import { Eyebrow } from "@/components/brand";
 import { ButtonLink } from "@/components/buttons";
 import { ChatIcon, ChilliIcon, DownloadIcon, PhoneIcon } from "@/components/icons";
-import { MenuBrowser } from "@/components/menu-browser";
+import { MenuPanel } from "@/components/menu-panel";
+import banner from "@/public/images/banner-wok.webp";
 
 export const metadata: Metadata = {
   title: "Menu & Prices",
@@ -18,14 +19,25 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-14 pb-10 md:pt-20">
-        <Steam className="pointer-events-none absolute top-6 right-4 h-44 text-turmeric/20 md:right-[12%]" />
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <section className="relative isolate overflow-hidden pt-14 pb-14 md:pt-24 md:pb-20">
+        <Image
+          src={banner}
+          alt=""
+          fill
+          preload
+          sizes="100vw"
+          quality={50}
+          placeholder="blur"
+          className="-z-20 scale-105 object-cover object-[60%_40%]"
+        />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-char/80" />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-[linear-gradient(to_bottom,transparent,var(--color-char))]" />
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Eyebrow className="text-chili">Since 1987</Eyebrow>
           <h1 className="display text-[clamp(3.6rem,14vw,8rem)]">
             The <span className="text-turmeric">menu</span>
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-muted">
+          <p className="mt-4 max-w-xl text-lg text-cream/85">
             Every price in AED, straight from our printed menu. Dishes marked <em className="text-cream not-italic">Classic of 1987</em>{" "}
             have been with us since Mumbai.
           </p>
@@ -50,9 +62,14 @@ export default function MenuPage() {
         </div>
       </section>
 
-      <MenuBrowser categories={menu} />
+      <section aria-labelledby="menu-list-title" className="mx-auto max-w-6xl px-4 sm:px-6">
+        <h2 id="menu-list-title" className="sr-only">
+          Menu by category
+        </h2>
+        <MenuPanel categories={menu} idPrefix="menu" />
+      </section>
 
-      <section aria-labelledby="notes-title" className="mx-auto mt-16 max-w-5xl px-4 sm:px-6">
+      <section aria-labelledby="notes-title" className="mx-auto mt-12 max-w-6xl px-4 sm:px-6">
         <div className="rounded-2xl bg-turmeric p-6 text-char sm:p-8">
           <h2 id="notes-title" className="display text-3xl">Good to know</h2>
           <ul className="mt-4 list-disc space-y-1.5 pl-5 font-medium">
@@ -63,7 +80,7 @@ export default function MenuPage() {
         </div>
       </section>
 
-      <section id="menu-pages" aria-labelledby="pages-title" className="mx-auto max-w-5xl scroll-mt-24 px-4 py-20 sm:px-6">
+      <section id="menu-pages" aria-labelledby="pages-title" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6">
         <h2 id="pages-title" className="display text-4xl sm:text-5xl">The printed menu</h2>
         <p className="mt-3 text-muted">Tap a page to open the full-size original.</p>
         <ul className="mt-8 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
