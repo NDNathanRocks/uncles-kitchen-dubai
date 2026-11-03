@@ -7,15 +7,15 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const anton = await readFile(join(process.cwd(), "assets/Anton-Regular.ttf"));
-const photo = `data:image/jpeg;base64,${await readFile(join(process.cwd(), "public/images/raw/interior-1.jpg"), "base64")}`;
+const photo = `data:image/jpeg;base64,${await readFile(join(process.cwd(), "assets/og-plate.jpg"), "base64")}`;
 
 export default async function Image() {
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", background: "#14110F" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo} width={1200} height={900} style={{ position: "absolute", top: -135, left: 0, objectFit: "cover" }} alt="" />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(20,17,15,0.76)", display: "flex" }} />
+        <img src={photo} width={720} height={720} style={{ position: "absolute", top: -40, right: -120, borderRadius: 360 }} alt="" />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(20,17,15,0.25)", display: "flex" }} />
         <div
           style={{
             position: "absolute",

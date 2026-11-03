@@ -30,3 +30,16 @@ npm run build    # production build
 
 The dish photos come from small images on the printed menu, so they are low resolution.
 New close-up food photography (especially the chicken lollipop) would lift the site a lot.
+
+### Hero "drop" scene (AI-generated)
+
+The homepage hero plate (`public/images/hero/`) was generated with Stability AI on
+Amazon Bedrock and is an illustration, not a photo of the restaurant's own plating.
+Pipeline (needs boto3 + Bedrock access in us-west-2):
+
+1. `scripts/gen-image.py generate` → full plate (Stable Image Ultra).
+2. Colour-mask the chicken, then `scripts/gen-image.py inpaint` → the same plate without chicken.
+3. `scripts/extract-pieces.py` → one transparent WebP per chicken piece + `pieces.json`
+   (positions), copied into `data/hero.ts`.
+
+`gen-image.py` logs every call with an estimated cost to `scripts/.gen-ledger.csv` and stops at a budget cap.

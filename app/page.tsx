@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { links, site } from "@/config/site";
 import { instagramTiles, signatureDishes } from "@/data/signature";
-import interior from "@/public/images/interior-1.webp";
-import mural from "@/public/images/mural-mumbai-dubai.webp";
-import heroPlate from "@/public/images/dishes/chicken-chilli-dry.webp";
-import { Eyebrow, Stamp, Steam } from "@/components/brand";
+import { glazeMask, heroPieces, plateEmpty, plateFull } from "@/data/hero";
+import { ManchurianDrop } from "@/components/manchurian-drop";
+import { Journey } from "@/components/journey";
+import { Eyebrow, Steam } from "@/components/brand";
 import { ButtonLink } from "@/components/buttons";
 import { DishCarousel } from "@/components/dish-carousel";
 import { HoursTable, OpenBadge } from "@/components/live-hours";
@@ -15,8 +15,8 @@ export default function Home() {
     <>
       <Hero />
       <SignatureBand />
+      <Journey chapters={timeline} />
       <Signature />
-      <Story />
       <Rating />
       <Instagram />
       <Visit />
@@ -26,56 +26,53 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden md:min-h-[calc(100svh-4.5rem)]">
-      <Image
-        src={interior}
-        alt="The Uncle's Kitchen dining room in Karama: red and yellow walls, pendant lamps and a Dubai skyline mural"
-        fill
-        preload
-        fetchPriority="high"
-        sizes="100vw"
-        quality={50}
-        placeholder="blur"
-        className="-z-20 object-cover object-[60%_center]"
-      />
-      <div className="absolute inset-0 -z-10 bg-char/75" aria-hidden />
-      <div className="pointer-events-none absolute right-[3%] bottom-[14%] hidden w-[min(27vw,26rem)] lg:block" aria-hidden>
-        <Steam className="absolute -top-40 left-1/2 h-48 -translate-x-1/2 text-cream/30" />
-        <span className="absolute inset-[8%] rounded-full bg-chili" />
-        <Image
-          src={heroPlate}
-          alt=""
-          sizes="26rem"
-          className="rise-in-delay relative w-full rotate-[-8deg] drop-shadow-[0_30px_40px_rgba(0,0,0,0.6)]"
-        />
-      </div>
-
-      <div className="mx-auto w-full max-w-7xl px-4 pt-24 pb-20 sm:px-6 md:pb-20">
-        <div className="rise-in">
+    <ManchurianDrop
+      plateEmpty={plateEmpty}
+      plateFull={plateFull}
+      glazeMask={glazeMask}
+      pieces={heroPieces}
+      intro={
+        <div className="mx-auto w-full max-w-7xl px-4 pt-8 sm:px-6 md:pt-14">
           <OpenBadge />
-        </div>
-        <h1 id="hero-title" className="display rise-in mt-6 text-[clamp(3.6rem,15vw,10.5rem)] text-cream">
-          Mumbai&rsquo;s <span className="block">Desi Chinese.</span>
-          <span className="block text-turmeric">In Karama.</span>
-        </h1>
-        <p className="rise-in-delay mt-6 max-w-xl text-lg font-medium text-cream/90 sm:text-xl">
-          Since 1987 <span className="px-1 text-chili" aria-hidden>·</span> Behind BurJuman Metro, Exit 2
-        </p>
-        <div className="rise-in-delay mt-8 flex flex-wrap gap-3">
-          <ButtonLink href="/menu" variant="yellow">
-            See the menu <ArrowIcon width={18} height={18} />
-          </ButtonLink>
-          <ButtonLink href={links.directions} external variant="outline">
-            <PinIcon width={18} height={18} /> Get directions
-          </ButtonLink>
-          {links.zomato ? (
-            <ButtonLink href={links.zomato} external variant="red">
-              <BagIcon width={18} height={18} /> Order on Zomato
+          <h1 id="hero-title" className="display mt-5 text-[clamp(3.2rem,13vw,8.5rem)] text-cream [text-shadow:0_4px_30px_rgb(20_17_15/0.7)]">
+            Mumbai&rsquo;s <span className="block">Desi Chinese.</span>
+            <span className="block text-turmeric">In Karama.</span>
+          </h1>
+          <p className="mt-4 max-w-xl text-lg font-medium text-cream/90 sm:text-xl">
+            Since 1987 <span className="px-1 text-chili" aria-hidden>·</span> Behind BurJuman Metro, Exit 2
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink href="/menu" variant="yellow">
+              See the menu <ArrowIcon width={18} height={18} />
             </ButtonLink>
-          ) : null}
+            <ButtonLink href={links.directions} external variant="outline" className="bg-char/60">
+              <PinIcon width={18} height={18} /> Get directions
+            </ButtonLink>
+            {links.zomato ? (
+              <ButtonLink href={links.zomato} external variant="red">
+                <BagIcon width={18} height={18} /> Order on Zomato
+              </ButtonLink>
+            ) : null}
+          </div>
+          <p className="mt-8 hidden items-center gap-3 text-xs font-bold tracking-[0.3em] text-muted uppercase md:flex motion-reduce:hidden" aria-hidden>
+            <span className="scroll-cue h-8 w-[2px] bg-turmeric" /> Scroll to cook
+          </p>
         </div>
-      </div>
-    </section>
+      }
+      outro={
+        <div className="mx-auto w-full max-w-7xl px-4 pt-8 sm:px-6 md:pt-14">
+          <p className="flex items-center gap-3 text-xs font-bold tracking-[0.3em] text-turmeric uppercase">
+            <span className="h-0.5 w-8 bg-current" aria-hidden /> Classic of 1987
+          </p>
+          <p className="display mt-3 text-[clamp(2.8rem,9vw,6.5rem)] text-cream [text-shadow:0_4px_30px_rgb(20_17_15/0.8)]">
+            Chicken <span className="text-chili">Manchurian.</span>
+          </p>
+          <p className="mt-3 max-w-md text-base text-cream/90 [text-shadow:0_2px_12px_rgb(20_17_15/0.9)] sm:text-lg">
+            Batter-fried chicken tossed in soy, ginger, garlic and green chillies. AED 24. Pair it with Hakka noodles.
+          </p>
+        </div>
+      }
+    />
   );
 }
 
@@ -141,81 +138,19 @@ const timeline = [
   {
     when: "1987",
     where: "Malad West, Mumbai",
-    text: "Jerome D'Souza opens Uncle's Kitchen and becomes one of the pioneers of Mumbai's Indo-Chinese food.",
+    text: "Jerome D'Souza opens Uncle's Kitchen and becomes one of the pioneers of Mumbai's Indo-Chinese food: saucy, wok-charred “desi Chinese”.",
   },
   {
     when: "Next generation",
     where: "Dubai",
-    text: "His sons, Sunny and Ronnie D'Souza, bring the family kitchen to Dubai for everyone who misses Mumbai-style Chinese.",
+    text: "His sons, Sunny and Ronnie D'Souza, bring it to Dubai so Indian expats can get the Mumbai-style Chinese they grew up with.",
   },
   {
     when: "Today",
     where: "Al Karama",
-    text: "Era Building, Exit 2, behind BurJuman Metro. The recipes and the base sauces still come from Mumbai.",
+    text: "Era Building, Exit 2, behind BurJuman Metro. To keep the taste the same, the base sauces come over from Mumbai.",
   },
 ];
-
-function Story() {
-  return (
-    <section id="story" aria-labelledby="story-title" className="relative overflow-hidden bg-char-2 py-20 md:py-28">
-      <Steam className="pointer-events-none absolute -top-4 left-[45%] hidden h-48 text-turmeric/15 lg:block" />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-        <div>
-          <Eyebrow className="text-turmeric">Our story</Eyebrow>
-          <h2 id="story-title" className="display reveal text-[clamp(2.6rem,7vw,5rem)]">
-            From a nook in Mumbai <span className="text-chili">to the heart of Dubai.</span>
-          </h2>
-          <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted">
-            <p>
-              In 1987, <strong className="font-semibold text-cream">Jerome D&rsquo;Souza</strong> opened Uncle&rsquo;s Kitchen
-              in Malad West, Mumbai. He was one of the pioneers of the city&rsquo;s Indo-Chinese cooking: the saucy,
-              wok-charred &ldquo;desi Chinese&rdquo; a whole generation grew up on.
-            </p>
-            <p>
-              His sons, <strong className="font-semibold text-cream">Sunny and Ronnie D&rsquo;Souza</strong>, brought it to
-              Dubai so Indian expats could get the Mumbai-style Chinese they remember from home. To keep the taste true,
-              the family has brought its base sauces over from Mumbai.
-            </p>
-          </div>
-        </div>
-
-        <figure className="reveal self-center">
-          <div className="relative -rotate-1 overflow-hidden rounded-2xl ring-1 ring-cream/10">
-            <Image
-              src={mural}
-              alt="Line-drawn mural on the restaurant's yellow wall tracing Mumbai's skyline into Dubai's, with the words 'The Legacy Continues'"
-              sizes="(min-width: 1024px) 560px, 100vw"
-              placeholder="blur"
-              className="w-full"
-            />
-            <div className="absolute bottom-3 left-3">
-              <Stamp size="sm" />
-            </div>
-          </div>
-          <figcaption className="mt-4 text-sm text-muted">
-            The wall in Karama: Mumbai&rsquo;s skyline running into Dubai&rsquo;s. &ldquo;The legacy continues.&rdquo;
-          </figcaption>
-        </figure>
-      </div>
-
-      <div className="mx-auto mt-16 max-w-7xl px-4 sm:px-6">
-        <ol className="grid gap-0 md:grid-cols-3">
-          {timeline.map((t, i) => (
-            <li key={t.when} className="reveal relative border-l-2 border-cream/15 pb-10 pl-6 md:border-t-2 md:border-l-0 md:pt-8 md:pr-8 md:pb-0 md:pl-0">
-              <span
-                aria-hidden
-                className={`absolute top-0 -left-[9px] size-4 rotate-45 md:-top-[9px] md:left-0 ${i === 0 ? "bg-chili" : i === 1 ? "bg-turmeric" : "bg-cream"}`}
-              />
-              <p className="display text-4xl text-cream md:text-5xl">{t.when}</p>
-              <p className="mt-1 text-sm font-bold tracking-[0.2em] text-turmeric uppercase">{t.where}</p>
-              <p className="mt-3 max-w-sm text-muted">{t.text}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
 
 function Rating() {
   return (

@@ -104,3 +104,67 @@
     transform: translateX(-50%);
   }
 }
+
+/* Moving glint across the glaze (mask limits it to the chicken). */
+.sheen {
+  --sx: -60%;
+  background: linear-gradient(
+    105deg,
+    transparent calc(var(--sx) - 14%),
+    rgb(255 236 200 / 0.6) var(--sx),
+    transparent calc(var(--sx) + 14%)
+  );
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .glisten {
+    animation: glisten 5.5s ease-in-out infinite;
+  }
+}
+@keyframes glisten {
+  0%, 62% { --sx: -60%; opacity: 0; }
+  64% { opacity: 1; }
+  100% { --sx: 160%; opacity: 1; }
+}
+@property --sx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: -60%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue {
+    transform-origin: top;
+    animation: cue 1.8s var(--ease-out-soft) infinite;
+  }
+}
+@keyframes cue {
+  0% { transform: scaleY(0); opacity: 1; }
+  70% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* Journey line art: paths draw on via stroke-dashoffset set from JS. */
+.journey [data-draw]:not(text) {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+}
+.journey text[data-draw] {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.journey-label {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey [data-draw]:not(text) {
+    stroke-dashoffset: 0 !important;
+  }
+  .journey text[data-draw] {
+    opacity: 1 !important;
+  }
+}
